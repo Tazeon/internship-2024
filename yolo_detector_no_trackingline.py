@@ -1,3 +1,20 @@
+"""
+I created two versions of the code: yolo_detector.py and yolo_detector_no_trackingline.py,
+because I am unsure about the instruction in the README.md that says "Draw a tracking line for the detected cat."
+
+If this instruction means that I need to implement a tracking line, it would require a lot of changes to the
+draw_boxes and detect_object functions. However, I am not certain whether modifying these parts would still fully
+comply with the intended requirements.
+
+If making those changes is acceptable, I will submit yolo_detector.py. 
+Otherwise, I will submit yolo_detector_no_trackingline.py.
+
+P.S. I am not sure whether the instruction "Add your name + Clicknext-Internship-2024 to the top-right corner" requires keeping "2024" exactly as specified.
+However, since I am submitting this in 2026, I updated it to "Clicknext-Internship-2026."
+
+Thank you.
+"""
+
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
 import cv2 as cv # import as cv
