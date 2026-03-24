@@ -1,14 +1,9 @@
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
 import cv2 as cv # import as cv
-from collections import defaultdict
-import numpy as np
 
 # Load YOLO model
 model = YOLO("yolov8n.pt") # correct model path name
-
-# Store the track history
-track_history = defaultdict(lambda: [])
 
 
 def draw_boxes(frame, boxes):
@@ -16,14 +11,7 @@ def draw_boxes(frame, boxes):
 
     # Create annotator object
     annotator = Annotator(frame)
-
-    if boxes.id is None:
-        return annotator.result()
-    # Handle in case there no object is detected
-
-    track_ids = boxes.id.int().tolist()
-
-    for box, track_id in zip(boxes, track_ids):
+    for box in boxes:
         class_id = box.cls
         class_name = model.names[int(class_id)]
         coordinator = box.xyxy[0]
@@ -35,17 +23,6 @@ def draw_boxes(frame, boxes):
         )
         # fix unbound error , make annotaor get in the loop
 
-        ### Implement from Multi-Object Tracking with Ultralytics YOLO
-        x, y, w, h = box.xywh[0].tolist()
-        track = track_history[track_id]
-        track.append((float(x), float(y)))  # x, y center point
-        if len(track) > 30:  # retain 30 tracks for 30 frames
-            track.pop(0)
-
-        # Draw the tracking lines
-        points = np.hstack(track).astype(np.int32).reshape((-1, 1, 2))
-        cv.polylines(frame, [points], isClosed=False, color=(255, 0, 0), thickness=5) 
-
     return annotator.result()
 
 
@@ -53,9 +30,7 @@ def detect_object(frame):
     """Detect object from image frame"""
 
     # Detect object from image frame
-
-    ### use .track() instead of predict because this instruction need to have tracking line
-    results = model.track(frame,persist=True,classes = [15]) # list[15] is class cat
+    results = model.predict(frame,classes = [15]) # list[15] is class cat
 
     for result in results:
         frame = draw_boxes(frame, result.boxes) # tab space to prevent syntax error
