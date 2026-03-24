@@ -17,10 +17,11 @@ def draw_boxes(frame, boxes):
         coordinator = box.xyxy[0]
         confidence = box.conf
 
-    # Draw bounding box
-    annotator.box_label(
-        box=coordinator, label=class_name, color=(255,0,0) # change box to blue color
-    )
+        # Draw bounding box
+        annotator.box_label(
+            box=coordinator, label=class_name, color=(255,0,0) # change box to blue color
+        )
+        # fix unbound error , make annotaor get in the loop
 
     return annotator.result()
 
