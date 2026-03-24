@@ -29,7 +29,7 @@ def detect_object(frame):
     """Detect object from image frame"""
 
     # Detect object from image frame
-    results = model.prediction(frame)
+    results = model.predict(frame)
 
     for result in results:
         frame = draw_boxes(frame, result.boxes)
@@ -42,9 +42,7 @@ if __name__ == "__main__":
     cap = cv.VideoCapture(video_path)
 
     # Define the codec and create VideoWriter object
-    video_writer = cv.VideoWriter(
-        video_path + "_demo.avi", cv.VideoWriter_fourcc(*"MJPG"), 30, (1280, 720)
-    )
+    # remove already kub
 
     while cap.isOpened():
         # Read image frame
@@ -54,8 +52,6 @@ if __name__ == "__main__":
             # Detect motorcycle from image frame
             frame_result = detect_object(frame)
 
-            # Write result to video
-            video_writer.write(frame_result)
 
             # Show result
             cv.namedWindow("Video", cv.WINDOW_NORMAL)
@@ -66,6 +62,5 @@ if __name__ == "__main__":
             break
 
     # Release the VideoCapture object and close the window
-    video_writer.release()
     cap.release()
     cv.destroyAllWindows()
