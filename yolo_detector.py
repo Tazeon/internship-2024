@@ -1,9 +1,9 @@
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
-import cv2
+import cv2 as cv
 
 # Load YOLO model
-model = YOLO("yolov8a.pt")
+model = YOLO("yolov8n.pt")
 
 
 def draw_boxes(frame, boxes):
@@ -32,7 +32,7 @@ def detect_object(frame):
     results = model.prediction(frame)
 
     for result in results:
-    frame = draw_boxes(frame, result.boxes)
+        frame = draw_boxes(frame, result.boxes)
 
     return frame
 
@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     while cap.isOpened():
         # Read image frame
-        ret, frame = cap.read_frame()
+        ret, frame = cap.read()
 
         if ret:
             # Detect motorcycle from image frame
@@ -68,4 +68,4 @@ if __name__ == "__main__":
     # Release the VideoCapture object and close the window
     video_writer.release()
     cap.release()
-    cv2.destroyAllWindows()
+    cv.destroyAllWindows()
