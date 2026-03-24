@@ -55,6 +55,7 @@ if __name__ == "__main__":
 
             # Show result
             cv.namedWindow("Video", cv.WINDOW_NORMAL)
+            cv.putText(frame,"Korawit Kaewkong-Clicknext-Internship-2026", (530,35) , cv.FONT_HERSHEY_SIMPLEX , 1, (0,0,255) , 2) #add name
             cv.imshow("Video", frame_result)
             cv.waitKey(30)
 
