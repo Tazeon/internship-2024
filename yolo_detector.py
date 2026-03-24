@@ -1,9 +1,9 @@
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
-import cv2 as cv
+import cv2 as cv # import as cv
 
 # Load YOLO model
-model = YOLO("yolov8n.pt")
+model = YOLO("yolov8n.pt") # correct model path name
 
 
 def draw_boxes(frame, boxes):
@@ -19,7 +19,7 @@ def draw_boxes(frame, boxes):
 
     # Draw bounding box
     annotator.box_label(
-        box=coordinator, label=class_name, color=colors(class_id, True)
+        box=coordinator, label=class_name, color=(255,0,0) # change box to blue color
     )
 
     return annotator.result()
@@ -29,10 +29,10 @@ def detect_object(frame):
     """Detect object from image frame"""
 
     # Detect object from image frame
-    results = model.predict(frame,classes = [15])
+    results = model.predict(frame,classes = [15]) # list[15] is class cat
 
     for result in results:
-        frame = draw_boxes(frame, result.boxes)
+        frame = draw_boxes(frame, result.boxes) # tab space to prevent syntax error
 
     return frame
 
@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     while cap.isOpened():
         # Read image frame
-        ret, frame = cap.read()
+        ret, frame = cap.read() #.read() is correct function
 
         if ret:
             # Detect motorcycle from image frame
